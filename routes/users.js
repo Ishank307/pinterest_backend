@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  posts: [
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+
+  }
   ],
   dp: {
     type: String,  // you can store image URL or file path here
