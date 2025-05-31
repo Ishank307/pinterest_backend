@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const plm=require('passport-local-mongoose');
+
 mongoose.connect("mongodb://127.0.0.1:27017/Pinterest_Project")
 
 
@@ -36,5 +38,7 @@ const userSchema = new mongoose.Schema({
 }, {
   timestamps: true  // automatically adds createdAt and updatedAt fields
 });
+
+userSchema.plugin(plm);
 
 module.exports = mongoose.model('User', userSchema);

@@ -29,6 +29,14 @@ router.get('/alluserposts', async function (req,res,next) {
   }).populate('posts')
   res.send(user)
   
+}),
+
+router.post('/register', function(req,res,next){
+  const userData= new userModel({
+username: req.body.username,
+      email: req.body.email,
+      fullName: req.body.fullName,
+  })
 })
 
 
