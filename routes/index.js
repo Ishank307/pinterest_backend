@@ -5,7 +5,7 @@ const userModel = require('./users');
 const postModel = require('./post');
 const passport = require('passport');
 const localStratergy=require('passport-local');
-passport.authenticate(new localStratergy(userModel.authenticate()));
+passport.use(new localStratergy(userModel.authenticate()));
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -34,9 +34,21 @@ router.get('/alluserposts', async function (req, res, next) {
 
 }),
 
+router.get('/login',function(req,res,next){
+  res.render('login',{error:req.flash('error')});
+})
 
-router.get('/profile',isLoggedIn,function(req,res,next){
-  res.send('profile');
+router.get('/feed',function(req,res){
+  res.render('feed');
+})
+
+
+router.get('/profile',isLoggedIn,async function(req,res,next){
+  const user= await userModel.findOne({
+    username: req.session.passport.user,
+  });
+  res.render('profile',{user});
+
 })
 
   router.post('/register', (req, res, next) => {
@@ -54,7 +66,8 @@ router.get('/profile',isLoggedIn,function(req,res,next){
 
   router.post('/login', passport.authenticate('local',{
     successRedirect: '/profile',
-    failureRedirect: '/'
+    failureRedirect: '/login',
+    failureFlash:true,
   }),function(req,res){});
 
   router.get('/logout',(req,res,next)=>{

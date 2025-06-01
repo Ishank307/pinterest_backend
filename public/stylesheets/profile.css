@@ -1,0 +1,28 @@
+.avatar{
+    --speed: 10s;
+    --border-w: -5px;
+    --border-clr: #ec1111cb;
+
+}
+
+.avatar::before {
+    position: absolute;
+    content: '';
+    z-index: -1;
+    transform-origin: center;
+    inset: var(--border-w);
+    border-radius: 50%;
+    background: conic-gradient(transparent 75%, var(--border-clr) 100%);
+    animation: rotate-border var(--speed) linear infinite;
+}
+
+@keyframes rotate-border {
+    from {
+        rotate: 0turn;
+    }
+
+    to {
+        rotate: 1turn
+    }
+}
+
