@@ -103,11 +103,19 @@ router.get('/createPost', async function (req, res, next) {
 
 });
 
-router.post('/upload',isLoggedIn,upload.single('file'),(req,res)=>{
+router.post('/upload',isLoggedIn,upload.single('file'), async(req,res)=>{
   if(!req.file){
     return res.status(400).send("no files were uploaded")
   }
-  res.send('file succesfully uploaded')
+  const user = await userModel.findOne({username: req.session.passport.user});
+
+  const postData=await postModel.create({
+    image: req.file.filename,
+    imageText: req.body.filecaption,
+    user: user._id,
+  });
+
+  await user.post.push(this.post._id);
 });
 
 
