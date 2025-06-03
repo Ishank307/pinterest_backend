@@ -234,6 +234,24 @@
         <input type="file" name="file">
         <button type="submit">Upload</button>
     </form>
+
+    <div class="container">
+    <div class="cards">
+        <% user.posts.forEach(function(post){%>
+        <div class="card"   style="width: 18rem;">
+            <img src="/images/uploads/<%=post.image%>"
+            alt=". . ." class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title" ><%= post.imageText %></h5>
+        </div>
+        </div>
+
+
+        <% }) %>
+
+    </div>
+
+    </div>
 </body>
 
 </html>
